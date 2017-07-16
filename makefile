@@ -1,16 +1,31 @@
 .DEFAULT_GOAL := all
 
+FILES :=            \
+    .gitignore      \
+    Collatz.c++     \
+    Collatz.h       \
+    Collatz.log     \
+    html            \
+    makefile        \
+    RunCollatz.c++  \
+    RunCollatz.in   \
+    RunCollatz.out  \
+    TestCollatz.c++ \
+    TestCollatz.out \
+   	.travis.yml                           
+   	# collatz-tests/jtrejo13-RunCollatz.in  \
+   	# collatz-tests/jtrejo13-RunCollatz.out \
+
 ifeq ($(shell uname), Darwin)                                           # Apple
     CXX          := g++
     INCLUDE      := /usr/local/include
-    GTEST_DIR	 := /usr/local
     CXXFLAGS     := -pedantic -std=c++14 -Wall -Weffc++
     # NEW
-    CPPFLAGS     := -isystem $(GTEST_DIR)/include
+    CPPFLAGS     := -isystem $(INCLUDE)
     LIBB         := /usr/local/lib
     LIBG         := /usr/local/lib
-    LDFLAGS      := -lboost_serialization -lgtest -lgtest_main -L/usr/local/lib
-    CLANG-CHECK  := /usr/local/Cellar/llvm/4.0.1/bin/clang-check
+    LDFLAGS      := -lboost_serialization -lgtest -lgtest_main
+    CLANG-CHECK  := clang-check
     GCOV         := gcov
     GCOVFLAGS    := -fprofile-arcs -ftest-coverage
     VALGRIND     := valgrind
@@ -57,6 +72,22 @@ else                                                                    # UTCS
     CLANG-FORMAT := clang-format-3.8
 endif
 
+collatz-tests:
+	git clone https://github.com/cs371gt-summer-2017/collatz-tests.git
+
+html: Doxyfile Collatz.h
+	$(DOXYGEN) Doxyfile
+
+Collatz.log:
+	git log > Collatz.log
+
+Doxyfile:
+	$(DOXYGEN) -g
+	# you must manually edit Doxyfile and
+	# set EXTRACT_ALL     to YES
+	# set EXTRACT_PRIVATE to YES
+	# set EXTRACT_STATEIC to YES
+
 RunCollatz: Collatz.h Collatz.c++ RunCollatz.c++
 	$(CXX) $(CXXFLAGS) Collatz.c++ RunCollatz.c++ -o RunCollatz
 	-$(CLANG-CHECK) -extra-arg=-std=c++11          Collatz.c++     --
@@ -74,11 +105,30 @@ TestCollatz: Collatz.h Collatz.c++ TestCollatz.c++
 	-$(CLANG-CHECK) -extra-arg=-std=c++11 -analyze TestCollatz.c++ --
 
 TestCollatz.tmp: TestCollatz
-	$(VALGRIND) ./TestCollatz                                >  TestCollatz.tmp 2>&1
-	-$(GCOV) -b Collatz.c++ | grep -A 5 "File 'Collatz.c++'" >> TestCollatz.tmp
+	$(VALGRIND) ./TestCollatz                                  >  TestCollatz.tmp 2>&1
+	-$(GCOV) -b Collatz.c++ | grep -A 5 "File '.*Collatz.c++'" >> TestCollatz.tmp
 	cat TestCollatz.tmp
 
 all: RunCollatz TestCollatz
+
+check:
+	@not_found=0;                                 \
+    for i in $(FILES);                            \
+    do                                            \
+        if [ -e $$i ];                            \
+        then                                      \
+            echo "$$i found";                     \
+        else                                      \
+            echo "$$i NOT FOUND";                 \
+            not_found=`expr "$$not_found" + "1"`; \
+        fi                                        \
+    done;                                         \
+    if [ $$not_found -ne 0 ];                     \
+    then                                          \
+        echo "$$not_found failures";              \
+        exit 1;                                   \
+    fi;                                           \
+    echo "success";
 
 clean:
 	rm -f  *.gcda
@@ -89,20 +139,44 @@ clean:
 	rm -f  RunCollatz
 	rm -f  TestCollatz
 	rm -rf *.dSYM
+	rm -rf latex
 
-sync:
+config:
+	git config -l
+
+docker:
+	sudo docker run -it -v $(PWD):/usr/cs371g -w /usr/cs371g gpdowning/gcc
+
+format:
+	$(CLANG-FORMAT) -i Collatz.c++
+	$(CLANG-FORMAT) -i Collatz.h
+	$(CLANG-FORMAT) -i RunCollatz.c++
+	$(CLANG-FORMAT) -i TestCollatz.c++
+
+scrub:
 	make clean
-	@echo `pwd`
-	@rsync -r -t -u -v --delete \
-    --include "*.c++"           \
-    --include "*.h"             \
-    --include "*.in"            \
-    --include "*.out"           \
-    --include "makefile"        \
-    --exclude "*"               \
-    . downing@$(CS):cs/projects/c++/collatz/
+	rm -f  Collatz.log
+	rm -f  Doxyfile
+	rm -rf collatz-tests
+	rm -rf html
+
+status:
+	make clean
+	@echo
+	git branch
+	git remote -v
+	git status
 
 test: RunCollatz.tmp TestCollatz.tmp
+
+travis: collatz-tests html Collatz.log
+	make clean
+	ls -al
+	make
+	ls -al
+	make test
+	ls -al
+	make check
 
 versions:
 	which cmake
@@ -124,9 +198,9 @@ versions:
 	ls -al $(LIBB)/*boost*
 	@echo
 	ls -al $(LIBG)/*gtest*
-	@echo
-	which $(CLANG-CHECK)
-	-$(CLANG-CHECK) --version
+	#@echo
+	#which $(CLANG-CHECK)
+	#-$(CLANG-CHECK) --version
 	@echo
 	which $(GCOV)
 	$(GCOV) --version
