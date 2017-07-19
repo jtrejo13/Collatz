@@ -1,0 +1,73 @@
+\hypertarget{_collatz_8c_09_09}{}\section{Collatz.\+c++ File Reference}
+\label{_collatz_8c_09_09}\index{Collatz.\+c++@{Collatz.\+c++}}
+{\ttfamily \#include $<$cassert$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include \char`\"{}Collatz.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{_collatz_8c_09_09_a359ebd12df3de639cfe17ff5988b59f0}{collatz\+\_\+read} (istream \&r)
+\item 
+int \hyperlink{_collatz_8c_09_09_a77eaddd3b2f41bf07ed1f1e8e248663a}{collatz\+\_\+eval} (long long n)
+\item 
+void \hyperlink{_collatz_8c_09_09_a3e9446ea3a53e3b076e00ffa8aab0020}{collatz\+\_\+print} (ostream \&w, int m)
+\item 
+void \hyperlink{_collatz_8c_09_09_a0ac646d2122741f9a9a52201bf9551cc}{collatz\+\_\+solve} (istream \&r, ostream \&w)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{_collatz_8c_09_09_a77eaddd3b2f41bf07ed1f1e8e248663a}\label{_collatz_8c_09_09_a77eaddd3b2f41bf07ed1f1e8e248663a}} 
+\index{Collatz.\+c++@{Collatz.\+c++}!collatz\+\_\+eval@{collatz\+\_\+eval}}
+\index{collatz\+\_\+eval@{collatz\+\_\+eval}!Collatz.\+c++@{Collatz.\+c++}}
+\subsubsection{\texorpdfstring{collatz\+\_\+eval()}{collatz\_eval()}}
+{\footnotesize\ttfamily int collatz\+\_\+eval (\begin{DoxyParamCaption}\item[{long long}]{n }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & the end of the range \mbox{[}1, n\mbox{]}, inclusive \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the value that produces the max cycle length of the range \mbox{[}1, n\mbox{]} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_collatz_8c_09_09_a3e9446ea3a53e3b076e00ffa8aab0020}\label{_collatz_8c_09_09_a3e9446ea3a53e3b076e00ffa8aab0020}} 
+\index{Collatz.\+c++@{Collatz.\+c++}!collatz\+\_\+print@{collatz\+\_\+print}}
+\index{collatz\+\_\+print@{collatz\+\_\+print}!Collatz.\+c++@{Collatz.\+c++}}
+\subsubsection{\texorpdfstring{collatz\+\_\+print()}{collatz\_print()}}
+{\footnotesize\ttfamily void collatz\+\_\+print (\begin{DoxyParamCaption}\item[{ostream \&}]{w,  }\item[{int}]{m }\end{DoxyParamCaption})}
+
+print an int to w 
+\begin{DoxyParams}{Parameters}
+{\em w} & an ostream \\
+\hline
+{\em m} & the max cycle length \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_collatz_8c_09_09_a359ebd12df3de639cfe17ff5988b59f0}\label{_collatz_8c_09_09_a359ebd12df3de639cfe17ff5988b59f0}} 
+\index{Collatz.\+c++@{Collatz.\+c++}!collatz\+\_\+read@{collatz\+\_\+read}}
+\index{collatz\+\_\+read@{collatz\+\_\+read}!Collatz.\+c++@{Collatz.\+c++}}
+\subsubsection{\texorpdfstring{collatz\+\_\+read()}{collatz\_read()}}
+{\footnotesize\ttfamily int collatz\+\_\+read (\begin{DoxyParamCaption}\item[{istream \&}]{r }\end{DoxyParamCaption})}
+
+read an int from r 
+\begin{DoxyParams}{Parameters}
+{\em r} & an istream \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the int 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_collatz_8c_09_09_a0ac646d2122741f9a9a52201bf9551cc}\label{_collatz_8c_09_09_a0ac646d2122741f9a9a52201bf9551cc}} 
+\index{Collatz.\+c++@{Collatz.\+c++}!collatz\+\_\+solve@{collatz\+\_\+solve}}
+\index{collatz\+\_\+solve@{collatz\+\_\+solve}!Collatz.\+c++@{Collatz.\+c++}}
+\subsubsection{\texorpdfstring{collatz\+\_\+solve()}{collatz\_solve()}}
+{\footnotesize\ttfamily void collatz\+\_\+solve (\begin{DoxyParamCaption}\item[{istream \&}]{r,  }\item[{ostream \&}]{w }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & an istream \\
+\hline
+{\em w} & an ostream \\
+\hline
+\end{DoxyParams}

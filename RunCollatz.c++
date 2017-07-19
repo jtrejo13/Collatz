@@ -1,7 +1,7 @@
 // -----------------------------------
 // projects/c++/collatz/RunCollatz.c++
 // Copyright (C) 2017
-// Glenn P. Downing
+// Juan Trejo
 // -----------------------------------
 
 // --------
@@ -19,4 +19,5 @@
 int main () {
     using namespace std;
     collatz_solve(cin, cout);
-    return 0;}
+    return 0;
+}

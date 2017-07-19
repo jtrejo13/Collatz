@@ -1,9 +1,18 @@
-// ------------------------------
-// projects/c++/collatz/Collatz.h
-// Copyright (C) 2017
-// Glenn P. Downing
-// ------------------------------
-
+/**
+ * @header Collatz.h
+ * @version 1.0
+ * @date 07/17/2017
+ * @author Juan Trejo
+ * @title Collatz
+ * @brief Implementation of Collatz conjecture
+ * @code
+ int main () {
+    using namespace std;
+    collatz_solve(cin, cout);
+    return 0;
+ }
+ * @endcode
+ */
 #ifndef Collatz_h
 #define Collatz_h
 
@@ -22,7 +31,7 @@ using namespace std;
 // ------------
 
 /**
- * read an int from r
+ * @breif read an int from r
  * @param r an istream
  * @return the int
  */
@@ -43,7 +52,7 @@ int collatz_eval (long long n);
 // -------------
 
 /**
- * print an int to w
+ * @breif print an int to w
  * @param w an ostream
  * @param m the max cycle length
  */

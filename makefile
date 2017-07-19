@@ -145,7 +145,7 @@ config:
 	git config -l
 
 docker:
-	sudo docker run -it -v $(PWD):/usr/cs371g -w /usr/cs371g gpdowning/gcc
+	docker run -it -v $(PWD):/usr/cs371g -w /usr/cs371g gpdowning/gcc
 
 format:
 	$(CLANG-FORMAT) -i Collatz.c++

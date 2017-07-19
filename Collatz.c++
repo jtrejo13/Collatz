@@ -1,7 +1,7 @@
 // --------------------------------
 // projects/c++/collatz/Collatz.c++
 // Copyright (C) 2017
-// Glenn P. Downing
+// Juan Trejo
 // --------------------------------
 
 // --------
@@ -30,9 +30,16 @@ int collatz_read (istream& r) {
 // ------------
 
 int collatz_eval (long long n) {
-    // <your code>
     assert(n > 0);
-    int m = n;
+    int m = 1;
+    while(n != 1){
+        if(n % 2 == 0){
+            n = n / 2;
+        }else{
+            n = n * 3 + 1;
+        }
+        m++;
+    }
     assert(m > 0);
     return m;}
 
